@@ -29,7 +29,7 @@ def blobproto_to_array(blob):
     blob.num, blob.channels, blob.height, blob.width).transpose()
 
 def versiontuple(version):
-  return tuple(map(int, (version.split("."))))
+  return tuple(map(int, (version.replace("rc", ".").split("."))))
 
 min_numpy_version = "1.7.0"
 if versiontuple(numpy.version.version) < versiontuple(min_numpy_version):

@@ -44,7 +44,7 @@ def dict_to_struct_array(d):
   return y
 
 def versiontuple(version):
-  return tuple(map(int, (version.split("."))))
+  return tuple(map(int, (version.replace("rc", ".").split("."))))
 
 min_numpy_version = "1.7.0"
 if versiontuple(numpy.version.version) < versiontuple(min_numpy_version):
