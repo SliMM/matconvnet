@@ -131,6 +131,17 @@ for l = 1:numel(net.layers)
         params(1).weightDecay = net.layers{l}.weightDecay(1) ;
         params(2).weightDecay = net.layers{l}.weightDecay(2) ;
       end
+    case {'pdist'}
+      block = PDistance() ;
+      if isfield(net.layers{l}, 'p')
+        block.p = net.layers{l}.p ; 
+      end
+      if isfield(net.layers{l}, 'noRoot')
+        block.noRoot = net.layers{l}.noRoot ; 
+      end
+      if isfield(net.layers{l}, 'epsilon')
+        block.epsilon = net.layers{l}.epsilon ; 
+      end
     otherwise
       error([net.layers{l}.type ' is unsupported']) ;
   end
