@@ -20,7 +20,7 @@ classdef PDistance < dagnn.Filter
       
       n = obj.numAveraged ;
       m = n + size(inputs{1},4) ;
-      obj.average = (n * obj.average + gather(outputs{1})) / m ;
+      obj.average = (n * obj.average + sum(gather(outputs{1}), 4)) / m ;
       obj.numAveraged = m ;
     end
     
