@@ -182,6 +182,35 @@ classdef DagNN < handle
         end
       end
     end
+
+    function v = getLayerIndex(obj, name)
+    %GETLAYERINDEX Get the index of a layer
+    %   INDEX = GETVARINDEX(obj, NAME) obtains the index of the layer
+    %   with the specified NAME. NAME can also be a cell array of
+    %   strings. If no layer with such a name is found, the value
+    %   NaN is returned for the index.
+    %
+    %   Layers can then be accessed as the `obj.layers(INDEX)`
+    %   property of the DaG.
+    %
+    %   Indexes are stable unless the DaG is modified (e.g. by adding
+    %   or removing layers); hence they can be cached for faster
+    %   variable access.
+    %
+    %    See Also getParamIndex
+      if iscell(name)
+        v = zeros(1, numel(name)) ;
+        for k = 1:numel(name)
+          v(k) = obj.getLayerIndex(name{k}) ;
+        end
+      else
+        if isfield(obj.layerNames, name)
+          v = obj.layerNames.(name) ;
+        else
+          v = NaN ;
+        end
+      end
+    end
   end
 
   methods (Static)
