@@ -92,6 +92,7 @@ classdef DagNN < handle
 
     % Manipualte the DagNN
     addLayer(obj, name, block, inputs, outputs, params)
+    insertLayer(obj, name, block, inputs, outputs, params)
     removeLayer(obj, name)
     rebuild(obj)
 
