@@ -24,6 +24,7 @@ opts.momentum = 0.9 ;
 opts.derOutputs = {'objective', 1} ;
 opts.memoryMapFile = fullfile(tempdir, 'matconvnet.bin') ;
 opts.extractStatsFn = @extractStats ;
+opts.shuffleFn = @(train,opts) train(randperm(numel(train)));
 opts = vl_argparse(opts, varargin) ;
 
 if ~exist(opts.expDir, 'dir'), mkdir(opts.expDir) ; end
@@ -83,7 +84,7 @@ for epoch=1:opts.numEpochs
   % train one epoch
   state.epoch = epoch ;
   state.learningRate = opts.learningRate(min(epoch, numel(opts.learningRate))) ;
-  state.train = opts.train(randperm(numel(opts.train))) ; % shuffle
+  state.train = opts.shuffleFn(opts.train, opts) ; % shuffle
   state.val = opts.val ;
   state.imdb = imdb ;
 
