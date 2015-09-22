@@ -85,7 +85,7 @@ numGpus = numel(opts.gpus) ;
 if numGpus > 1
   if isempty(gcp('nocreate')),
     parpool('local',numGpus) ;
-    spmd, gpuDevice(opts.gpus(labindex)), end
+    spmd(numGpus), gpuDevice(opts.gpus(labindex)), end
   end
 elseif numGpus == 1
   gpuDevice(opts.gpus)

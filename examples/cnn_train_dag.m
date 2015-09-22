@@ -49,7 +49,7 @@ numGpus = numel(opts.gpus) ;
 if numGpus > 1
   if isempty(gcp('nocreate')),
     parpool('local',numGpus) ;
-    spmd, gpuDevice(opts.gpus(labindex)), end
+    spmd(numGpus), gpuDevice(opts.gpus(labindex)), end
   end
   if exist(opts.memoryMapFile)
     delete(opts.memoryMapFile) ;
@@ -92,7 +92,7 @@ for epoch=1:opts.numEpochs
     stats.val(epoch) = process_epoch(net, state, opts, 'val') ;
   else
     savedNet = net.saveobj() ;
-    spmd
+    spmd(numGpus)
       net_ = dagnn.DagNN.loadobj(savedNet) ;
       stats_.train = process_epoch(net_, state, opts, 'train') ;
       stats_.val = process_epoch(net_, state, opts, 'val') ;
